@@ -1,0 +1,295 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+       "title":"Kiva Protocol API",
+       "description":"Documentation for Kiva Protocol's API",
+       "version":"1.0",
+       "contact":{
+ 
+       }
+    },
+    "tags":[
+ 
+    ],
+    "servers":[
+ 
+    ],
+    "components":{
+       "schemas":{
+          "SearchDto":{
+             "type":"object",
+             "properties":{
+                "firstName":{
+                   "type":"string",
+                   "minLength":1,
+                   "maxLength":50,
+                   "description":"Fuzzy match against first name"
+                },
+                "lastName":{
+                   "type":"string",
+                   "minLength":1,
+                   "maxLength":50,
+                   "description":"Fuzzy match against last name"
+                },
+                "mothersFirstName":{
+                   "type":"string",
+                   "minLength":1,
+                   "maxLength":50,
+                   "description":"Fuzzy match against mother's first name"
+                },
+                "fathersFirstName":{
+                   "type":"string",
+                   "minLength":1,
+                   "maxLength":50,
+                   "description":"Fuzzy match against father's first name"
+                },
+                "birthDate":{
+                   "type":"string",
+                   "description":"Date of birth in format 'YYYY-MM-DD'"
+                }
+             },
+             "required":[
+                "firstName",
+                "lastName"
+             ]
+          },
+          "KycDto":{
+             "type":"object",
+             "properties":{
+                "position":{
+                   "type":"number",
+                   "minimum":1,
+                   "maximum":10,
+                   "example":1,
+                   "description":"Positions 1-5 correspond to right thumb through right little finger, 6-10 correspond to left thumb to left little finger."
+                },
+                "image":{
+                   "type":"string",
+                   "example":"BASE64_ENCODED_PNG",
+                   "description":"Image in PNG/JPEG format that has been base64 encoded."
+                },
+                "device":{
+                   "type":"object",
+                   "example":{
+                      "FingerprintSensorSerialNumber":"xyz123",
+                      "TellerComputerUsername":"TestUser"
+                   },
+                   "description":"Device details as a JSON object, must include at least 'FingerprintSensorSerialNumber' and 'TellerComputerUsername'."
+                },
+                "filters":{
+                   "type":"object",
+                   "example":{
+                      "voterId":1111111
+                   },
+                   "description":"Must use either 'filters' or 'search' (but not both). Filters can include 'voterId' and 'nationalId' and will always correspond to exactly 1 citizen."
+                },
+                "search":{
+                   "allOf":[
+                      {
+                         "$ref":"#/components/schemas/SearchDto"
+                      },
+                      {
+                         "readOnly":true,
+                         "description":"Must use either 'filters' or 'search' (but not both). Search params my find multiple citizens and the one with the best fingerprint match will be returned."
+                      }
+                   ]
+                },
+                "requestedAttributes":{
+                   "readOnly":true,
+                   "description":"By default don't set, and it will return all attributes. Optionally set specifically which attributes are needed.",
+                   "type":"array",
+                   "items":{
+                      "type":"string"
+                   }
+                },
+                "issuerDid":{
+                   "type":"string",
+                   "readOnly":true,
+                   "minLength":22,
+                   "maxLength":64,
+                   "description":"By default don't set and an issuerDid will be assigned based on context. Optionally set which issuerDid to verify against."
+                },
+                "nonce":{
+                   "type":"string",
+                   "readOnly":true,
+                   "minLength":20,
+                   "maxLength":32,
+                   "description":"By default don't set and a nonce will be auto generated. Optionally set your own nonce and you will receive an indy proof back along with the identity data."
+                }
+             },
+             "required":[
+                "position",
+                "image",
+                "device"
+             ]
+          },
+          "KycResponseDto":{
+             "type":"object",
+             "properties":{
+                "birthDate":{
+                   "type":"string",
+                   "example":"2000-01-01T00:00:00.000Z"
+                },
+                "birthPlace":{
+                   "type":"string",
+                   "example":"Village, Chiefdom, District"
+                },
+                "fatherFirstName":{
+                   "type":"string",
+                   "example":"NAME"
+                },
+                "fatherLastName":{
+                   "type":"string",
+                   "example":"NAME"
+                },
+                "gender":{
+                   "type":"string",
+                   "example":"MALE"
+                },
+                "lastName":{
+                   "type":"string",
+                   "example":"NAME"
+                },
+                "maritalStatus":{
+                   "type":"string",
+                   "example":"Single"
+                },
+                "middleName":{
+                   "type":"string",
+                   "example":"NAME"
+                },
+                "motherFirstName":{
+                   "type":"string",
+                   "example":"NAME"
+                },
+                "motherLastName":{
+                   "type":"string",
+                   "example":"NAME"
+                },
+                "nationalId":{
+                   "type":"string",
+                   "example":"ABCD1234"
+                },
+                "nationalIssueDate":{
+                   "type":"string",
+                   "example":"2017-01-01T01:01:01.111Z"
+                },
+                "occupation":{
+                   "type":"string",
+                   "example":"WORKER"
+                },
+                "permanentAddress":{
+                   "type":"string",
+                   "example":"Address, Village, Chiefdom, District"
+                },
+                "phoneNumber":{
+                   "type":"string",
+                   "example":"11111111"
+                },
+                "photo~attach":{
+                   "type":"string",
+                   "example":"BASE64_ENCODED_PNG"
+                },
+                "residentialAddress":{
+                   "type":"string",
+                   "example":"Address, Village, Chiefdom, District"
+                },
+                "signature~attach":{
+                   "type":"string",
+                   "example":"BASE64_ENCODED_PNG"
+                },
+                "voterId":{
+                   "type":"string",
+                   "example":"1111111"
+                },
+                "voterIssueDate":{
+                   "type":"string",
+                   "example":"2017-01-01T01:01:01.111Z"
+                }
+             }
+          }
+       }
+    },
+    "paths":{
+       "/ping":{
+          "get":{
+             "description": "Ping to test that gateway is running",
+             "operationId":"AppController_ping",
+             "parameters":[
+ 
+             ],
+             "responses":{
+                "200":{
+                   "description":"A response of 'pong' means the gateway is up"
+                }
+             }
+          }
+       },
+       "/v1/kyc":{
+          "post":{
+             "description": "Given a citizen's fingerprint and some identifying info, returns KYC data",
+             "operationId":"KycController_kyc",
+             "parameters":[
+                {
+                   "name":"authorization",
+                   "required":false,
+                   "in":"header",
+                   "schema":{
+                      "type":"string"
+                   }
+                },
+                {
+                   "name":"x-session-id",
+                   "required":false,
+                   "in":"header",
+                   "schema":{
+                      "type":"string"
+                   }
+                }
+             ],
+             "requestBody":{
+                "required":true,
+                "content":{
+                   "application/json":{
+                      "schema":{
+                         "$ref":"#/components/schemas/KycDto"
+                      }
+                   }
+                }
+             },
+             "responses":{
+                "201":{
+                   "description":"Responds with the citizen's KYC data",
+                   "content":{
+                      "application/json":{
+                         "schema":{
+                            "$ref":"#/components/schemas/KycResponseDto"
+                         }
+                      }
+                   }
+                }
+             },
+             "tags":[
+                "kyc"
+             ]
+          }
+       },
+       "/v1/kyc/attributes":{
+          "get":{
+             "description": "List of possible KYC attributes",
+             "operationId":"KycController_getRequestedAttributes",
+             "parameters":[
+ 
+             ],
+             "responses":{
+                "200":{
+                   "description":"Returns the list of possible KYC attributes"
+                }
+             },
+             "tags":[
+                "kyc"
+             ]
+          }
+       }
+    }
+ }
