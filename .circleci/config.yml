@@ -68,7 +68,7 @@ workflows:
               only: /.*/
       - docker/publish:
           requires:
-            - production-dockerfile-test 
+            - integration-test
           filters: # only run for semver tagged versions
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)/
