@@ -1,0 +1,84 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+      tag: '8.12'
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: |
+            npm install
+      - run:
+          name: Lint
+          command: |
+            npm run lint
+      - run:
+          name: Local tests
+          command: |
+            npm run test
+
+  integration-test:
+    machine:
+      docker_layer_caching: true
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run:
+          name: Setup shell environment
+          command: |
+            cp dummy.env .env
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run:
+          name: Node npm setup
+          command: |
+              npm install nodemon --save-dev
+              npm install
+              nvm install v8.17.0
+              node -v
+              nvm alias default v8.17.0
+      - run:
+          name: Start docker compose and wait for readiness
+          command: |
+            docker network ls
+            docker-compose -f docker-compose.ci.yml build
+            set -x
+            docker-compose -f docker-compose.ci.yml up -d
+            sleep 15
+            docker-compose -f docker-compose.ci.yml logs
+      - run:
+          name: Run prod tests
+          command: |
+            npm run test:prod
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - build-and-test:
+          filters: # run for all branches AND tags
+            tags:
+              only: /.*/
+      - integration-test:
+          requires:
+            - build-and-test
+          filters: # run for all branches AND tags
+            tags:
+              only: /.*/
+      - docker/publish:
+          requires:
+            - production-dockerfile-test 
+          filters: # only run for semver tagged versions
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)/
+            branches:
+              ignore: /.*/
+          update-description: true
+          dockerfile: Dockerfile.production
+          image: kivaprotocol/protocol-gateway
+          tag: << pipeline.git.tag >>
+
+orbs:
+  node: circleci/node@1.1.6
+  docker: circleci/docker@1.3.0
