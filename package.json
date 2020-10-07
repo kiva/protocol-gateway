@@ -18,7 +18,7 @@
     "start:hmr": "node dist/server",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint:fix": "tslint -p tsconfig.json -c tslint.json --fix",
-    "test": "node -r dotenv/config node_modules/.bin/jest --runInBand",
+    "test:local": "node -r dotenv/config node_modules/.bin/jest -f local",
     "test:prod": "node -r dotenv/config node_modules/.bin/jest -f prod"
   },
   "dependencies": {
