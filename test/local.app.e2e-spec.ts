@@ -4,6 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { AppService } from '../src/app/app.service';
 import { AppController } from '../src/app/app.controller';
 
+/**
+ * Run simple tests against a test app
+ */
 describe('AppController (e2e)', () => {
     let app: INestApplication;
 
