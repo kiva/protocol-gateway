@@ -1,5 +1,4 @@
 import { Get, Controller } from '@nestjs/common';
-import { V1Uri } from '../V1Uri';
 import { HttpConstants } from 'protocol-common/http-context/http.constants';
 
 /**
@@ -13,12 +12,12 @@ export class AppController {
         return process.env.SERVICE_NAME;
     }
 
-    @Get(V1Uri.APP_PING)
+    @Get('ping')
     ping(): string {
         return HttpConstants.PING_RESPONSE;
     }
 
-    @Get(V1Uri.APP_HEALTHZ)
+    @Get('healthz')
     healthz(): string {
         return HttpConstants.HEALTHZ_RESPONSE;
     }
