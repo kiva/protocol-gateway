@@ -5,6 +5,7 @@ import { GatewayService } from './gateway.service';
 import { RequestIdMiddleware } from './request.id.middleware';
 import { AuthenticationMiddleware } from './authentication.middleware';
 import { SpanPropagationMiddleware } from './span.propagation.middleware';
+import { Logger } from 'protocol-common/logger';
 
 @Module({
     imports: [HttpModule],
@@ -20,14 +21,20 @@ export class GatewayModule implements NestModule {
      * @param consumer
      */
     configure(consumer: MiddlewareConsumer) {
-        // We need to handle request id, request context, authentication, gateway logger,
-        // and api key auth as middlewares before going to http proxy middleware
+        // We need to handle span, request id, and request context middlewares before going to http proxy middleware
         consumer.apply(
             SpanPropagationMiddleware,
             RequestIdMiddleware,
             RequestContextMiddleware,
-            AuthenticationMiddleware,
         ).forRoutes('*');
+
+        // Enable Auth0 unless explicitly set to false
+        if (process.env.AUTH0_ENABLED !== 'false') {
+            Logger.log('Enabling Auth0');
+            consumer.apply(AuthenticationMiddleware).forRoutes('*');
+        } else {
+            Logger.warn('NOT enabling Auth0');
+        }
 
         this.gatewayService.getJsonRoutes().map(routeOptions => {
             const proxyPath = routeOptions.path;
