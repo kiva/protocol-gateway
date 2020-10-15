@@ -22,7 +22,6 @@
     "test:prod": "node -r dotenv/config node_modules/.bin/jest -f prod"
   },
   "dependencies": {
-    "protocol-common": "0.1.16",
     "@nestjs/common": "^7.4.2",
     "@nestjs/core": "^7.4.2",
     "@nestjs/platform-express": "^7.4.2",
@@ -40,6 +39,7 @@
     "jaeger-client": "^3.18.0",
     "jwks-rsa": "^1.8.1",
     "opentracing": "^0.14.4",
+    "protocol-common": "0.1.20",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.2",
     "swagger-ui-express": "^4.1.4",
