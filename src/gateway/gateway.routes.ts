@@ -33,6 +33,7 @@ export class GatewayRoutes {
                     '^/v2/sandbox/register': '/v2/register',
                 },
             },
+            // TODO remove this once frontend is off it
             {
                 path: [ '/v2/demo/mobile' ],
                 target : process.env.DEMO_CONTROLLER,
@@ -40,12 +41,46 @@ export class GatewayRoutes {
                     '^/v2/demo/mobile': '/v2/mobile',
                 },
             },
-            // Exposing the kiva agent endpoints in sandbox so we have an agent to test against
+            // TODO remove this once frontend is off it
+            {
+                path: [ '/v2/mobile' ],
+                target : process.env.FSP_CONTROLLER,
+            },
+            // TODO remove this once integration tests are off it
             {
                 path: [ '/v2/kiva/agent' ],
                 target : process.env.KIVA_CONTROLLER,
                 pathRewrite: {
                     '^/v2/kiva/agent': '/v1/agent',
+                },
+            },
+            // Putting these 4 in sandbox for now, but can eventually expose them via prod
+            {
+                path: [ '/v2/demo/api' ],
+                target : process.env.DEMO_CONTROLLER,
+                pathRewrite: {
+                    '^/v2/demo/api': '/v2/api',
+                },
+            },
+            {
+                path: [ '/v2/kiva/api' ],
+                target : process.env.KIVA_CONTROLLER,
+                pathRewrite: {
+                    '^/v2/kiva/api': '/v2/api',
+                },
+            },
+            {
+                path: [ '/v2/ncra/api' ],
+                target : process.env.NCRA_CONTROLLER,
+                pathRewrite: {
+                    '^/v2/ncra/api': '/v2/api',
+                },
+            },
+            {
+                path: [ '/v2/fsp/api' ],
+                target : process.env.FSP_CONTROLLER,
+                pathRewrite: {
+                    '^/v2/fsp/api': '/v2/api',
                 },
             },
         ];
@@ -77,10 +112,6 @@ export class GatewayRoutes {
             },
             {
                 path: [ '/v2/kyc' ],
-                target : process.env.FSP_CONTROLLER,
-            },
-            {
-                path: [ '/v2/mobile' ],
                 target : process.env.FSP_CONTROLLER,
             },
             {
