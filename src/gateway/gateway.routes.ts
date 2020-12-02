@@ -46,12 +46,19 @@ export class GatewayRoutes {
                 path: [ '/v2/mobile' ],
                 target : process.env.FSP_CONTROLLER,
             },
-            // TODO remove this once integration tests are off it
+            // TODO remove these once integration tests are off them
             {
                 path: [ '/v2/kiva/agent' ],
                 target : process.env.KIVA_CONTROLLER,
                 pathRewrite: {
                     '^/v2/kiva/agent': '/v1/agent',
+                },
+            },
+            {
+                path: [ '/v2/demo/agent' ],
+                target : process.env.DEMO_CONTROLLER,
+                pathRewrite: {
+                    '^/v2/demo/agent': '/v1/agent',
                 },
             },
             // Putting these 4 in sandbox for now, but can eventually expose them via prod
