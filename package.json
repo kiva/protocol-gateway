@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "description": "Gateway for Kiva Protocol",
   "license": "Apache-2.0",
   "type": "commonjs",
@@ -35,7 +35,7 @@
     "http-proxy-middleware": "^1.0.6",
     "jwks-rsa": "^1.12.0",
     "opentracing": "^0.14.5",
-    "protocol-common": "^0.1.23",
+    "protocol-common": "^0.1.24",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.3",
     "swagger-ui-express": "^4.1.5",
