@@ -7,18 +7,10 @@ jobs:
       tag: '14.15.1'
     steps:
       - checkout
-      - run:
-          name: Setup
-          command: |
-            npm install
-      - run:
-          name: Lint
-          command: |
-            npm run lint
-      - run:
-          name: Run local tests
-          command: |
-            npm run test:local
+      - run: npm install
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test:local
 
   integration-test:
     machine:
