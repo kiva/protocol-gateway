@@ -11,6 +11,7 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm run test:local
+      - run: node --version
 
   integration-test:
     machine:
