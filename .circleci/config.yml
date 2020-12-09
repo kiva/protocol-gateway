@@ -4,21 +4,14 @@ jobs:
   build-and-test:
     executor:
       name: node/default
-      tag: '8.12'
+      tag: '14.15.1'
     steps:
       - checkout
-      - run:
-          name: Setup
-          command: |
-            npm install
-      - run:
-          name: Lint
-          command: |
-            npm run lint
-      - run:
-          name: Run local tests
-          command: |
-            npm run test:local
+      - run: npm install
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test:local
+      - run: node --version
 
   integration-test:
     machine:
@@ -36,9 +29,9 @@ jobs:
           command: |
               npm install nodemon --save-dev
               npm install
-              nvm install v8.17.0
+              nvm install v14.15.1
               node -v
-              nvm alias default v8.17.0
+              nvm alias default v14.15.1
       - run:
           name: Start docker compose and wait for readiness
           command: |
@@ -80,5 +73,5 @@ workflows:
           tag: << pipeline.git.tag >>
 
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@4.1.0
   docker: circleci/docker@1.3.0
