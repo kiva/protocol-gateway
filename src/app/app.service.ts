@@ -30,7 +30,7 @@ export class AppService {
         app.use(helmet());
 
         const corsWhitelist = process.env.CORS_WHITELIST;
-        if (corsWhitelist == null || corsWhitelist === '') {
+        if (corsWhitelist === null || corsWhitelist === '') {
             app.enableCors();
         } else {
             app.enableCors({origin: corsWhitelist.split(',')});
