@@ -36,7 +36,6 @@ export class AppService {
             app.enableCors({credentials: true, origin: corsWhitelist.split(',')});
         }
         app.useGlobalFilters(new ProtocolExceptionFilter());
-        app.useGlobalInterceptors(new LoggingInterceptor());
 
         app.use(traceware('gateway'));
 
