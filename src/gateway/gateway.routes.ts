@@ -125,6 +125,13 @@ export class GatewayRoutes {
                 path: [ '/v1/router' ],
                 target : process.env.ARIES_GUARDIANSHIP_AGENCY,
             },
+            {
+                path: [ '/v2/multitenant' ],
+                target : process.env.MULTITENANT,
+                pathRewrite: {
+                    '^/v2/multitenant': ''
+                }
+            },
         ];
     }
 
