@@ -6,10 +6,10 @@ export class GatewayCommon {
     /**
      * This is required here because consumer.apply().exclude does not exclude wildcard matches at this time :(
      * https://github.com/nestjs/nest/issues/853
-     * Note that v1/router exposes the http routes to our agents which we want accessible without Auth0 permissions
+     * Note that v1/router & /v2/multitenant expose the http routes to our agents which we want accessible without Auth0 permissions
      */
     public static skipPermittedRoutes(url): boolean {
-        const permitted = ['^/$', '^/ping$', '^/healthz$', '^/v1/router'];
+        const permitted = ['^/$', '^/ping$', '^/healthz$', '^/v1/router', '^/v2/multitenant'];
         return permitted.some((permittedUrl) => { return url.match(permittedUrl); });
     }
 
