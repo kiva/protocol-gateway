@@ -20,13 +20,6 @@ export class GatewayRoutes {
     private static getSandboxRoutes(): Array<any> {
         return [
             {
-                path: [ '/v1/sandbox/register' ],
-                target : process.env.WALLET_SYNC_SERVICE_URL,
-                pathRewrite: {
-                    '^/v1/sandbox/register': '/v1/register',
-                },
-            },
-            {
                 path: [ '/v2/sandbox/register' ],
                 target : process.env.NCRA_CONTROLLER,
                 pathRewrite: {
@@ -60,6 +53,10 @@ export class GatewayRoutes {
                 pathRewrite: {
                     '^/v2/demo/agent': '/v1/agent',
                 },
+            },
+            {
+                path: [ '/v2/multitenant' ],
+                target : process.env.ARIES_GUARDIANSHIP_AGENCY,
             },
             // Putting these 4 in sandbox for now, but can eventually expose them via prod
             {
@@ -95,21 +92,6 @@ export class GatewayRoutes {
 
     private static getProdRoutes(): Array<any> {
         return [
-            {
-                path: [ '/v1/ping' ],
-                target : process.env.WALLET_SYNC_SERVICE_URL,
-                pathRewrite: {
-                    '^/v1/ping': '/ping',
-                },
-            },
-            {
-                path: [ '/v1/kyc' ],
-                target : process.env.WALLET_SYNC_SERVICE_URL,
-            },
-            {
-                path: [ '/v1/connections' ],
-                target : process.env.WALLET_SYNC_SERVICE_URL,
-            },
             {
                 path: [ '/v2/ping' ],
                 target : process.env.FSP_CONTROLLER,
