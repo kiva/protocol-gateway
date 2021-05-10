@@ -87,6 +87,14 @@ export class GatewayRoutes {
                     '^/v2/fsp/api': '/v2/api',
                 },
             },
+            // (voutasaurus): TODO launch distinct record services for each issuer and route based on that
+            {
+                path: [ '/v2/credential' ],
+                target : process.env.CREDENTIAL_URL,
+                pathRewrite: {
+                    '^/v2/credential': '/credential',
+                },
+            },
         ];
     }
 
