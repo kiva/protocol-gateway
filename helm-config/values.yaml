@@ -30,7 +30,7 @@ resources:
     memory: 256Mi
 
 ingress:
-  host: "protocol-gateway.dk1.kiva.org"
+  host: "gateway.protocol-dev.kiva.org"
   class: nginx-ingress-external
   tls: true
 
