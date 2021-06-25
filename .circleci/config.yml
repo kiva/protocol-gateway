@@ -50,15 +50,9 @@ jobs:
     machine:
       image: ubuntu-1604:201903-01
     steps:
-      - checkout
-      - run:
-          name: Build Docker image for gateway
-          command: |
-            docker build . -t gateway
       - run:
           name: Pull protocol-integration-tests
           command: |
-            cd ..
             git clone https://github.com/kiva/protocol-integration-tests
             cd protocol-integration-tests
       - run:
@@ -76,6 +70,9 @@ jobs:
       - run:
           name: Get ACAPy
           command: docker pull bcgovimages/aries-cloudagent:py36-1.15-1_0.6.0
+      - run:
+          name: Override for gateway image
+          command: ./scripts/setup_override.sh -r protocol-gateway
       - run:
           name: Start docker compose and wait for readiness
           command: |
