@@ -52,14 +52,10 @@ jobs:
     steps:
       - run:
           name: Pull protocol-integration-tests
-          command: |
-            git clone https://github.com/kiva/protocol-integration-tests
-            cd protocol-integration-tests
-            pwd
+          command: git clone https://github.com/kiva/protocol-integration-tests ./
       - run:
           name: Setup environment
           command: |
-            pwd
             ./scripts/setup_env.sh
             echo $AUTH0_ENV | base64 --decode >> .env
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
@@ -84,8 +80,7 @@ jobs:
             docker-compose -f docker-compose.yml logs
       - run:
           name: Healthcheck services
-          command: |
-              ./scripts/healthstack.sh
+          command: ./scripts/healthstack.sh
       - run:
           name: Setup integration tests
           command: |
