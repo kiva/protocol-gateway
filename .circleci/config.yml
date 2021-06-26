@@ -112,12 +112,15 @@ workflows:
       - protocol-integration-tests:
           requires:
             - build-and-test
-          filters: # run for all branches AND tags
+          filters: # only run for semver tagged versions
             tags:
-              only: /.*/
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)/
+            branches:
+              ignore: /.*/
       - docker/publish:
           requires:
             - integration-test
+            - protocol-integration-tests
           filters: # only run for semver tagged versions
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)/
