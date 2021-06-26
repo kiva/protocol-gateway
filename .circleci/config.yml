@@ -55,9 +55,11 @@ jobs:
           command: |
             git clone https://github.com/kiva/protocol-integration-tests
             cd protocol-integration-tests
+            pwd
       - run:
           name: Setup environment
           command: |
+            pwd
             ./scripts/setup_env.sh
             echo $AUTH0_ENV | base64 --decode >> .env
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
