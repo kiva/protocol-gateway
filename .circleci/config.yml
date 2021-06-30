@@ -35,6 +35,7 @@ jobs:
       - run:
           name: Start docker compose and wait for readiness
           command: |
+            docker system prune -f
             docker network ls
             docker-compose -f docker-compose.ci.yml build
             set -x
