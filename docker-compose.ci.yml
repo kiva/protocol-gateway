@@ -19,7 +19,7 @@ services:
       context: ./
       dockerfile: Dockerfile.production
     command: npm run start:prod
-    image: protocol-gateway
+    image: protocol-gateway:latest
     container_name: protocol-gateway
     working_dir: /www
     ports:
