@@ -18,7 +18,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.production
-    command: npm run start:debug
+    command: npm run start:prod
     image: protocol-gateway
     container_name: protocol-gateway
     working_dir: /www
