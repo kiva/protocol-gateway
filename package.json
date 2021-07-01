@@ -14,7 +14,6 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "tsc && node -r dotenv/config dist/main.js",
     "start:debug": "nodemon --legacy-watch",
-    "start:prod": "node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint:fix": "tslint -p tsconfig.json -c tslint.json --fix",
     "test:local": "node -r dotenv/config node_modules/.bin/jest -- local",
