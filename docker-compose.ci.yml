@@ -18,16 +18,13 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.production
-    command: npm run start:debug
-    image: protocol-gateway
+    image: protocol-gateway:latest
     container_name: protocol-gateway
     working_dir: /www
     ports:
       - "8080:8080"
     expose: 
       - "8080"
-    volumes:
-      - ./:/www
     networks:
       - agency-network
     tty: true
