@@ -154,6 +154,8 @@ workflows:
           image: kivaprotocol/protocol-gateway
           tag: << pipeline.git.tag >>,latest
       - push-to-dev:
+          context:
+            - continuous-deployment-dev
           requires:
             - docker/publish
           filters: # only run for semver tagged versions
