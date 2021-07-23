@@ -50,6 +50,9 @@ spec:
           initialDelaySeconds: 20
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
       imagePullSecrets:
         {{- with .Values.image.imagePullSecrets }}
           {{- toYaml . | nindent 8 }}
