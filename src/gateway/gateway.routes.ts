@@ -1,4 +1,5 @@
 import { Constants } from 'protocol-common/constants';
+import { Logger } from 'protocol-common/logger';
 
 /**
  * Defines all routes.
@@ -99,7 +100,7 @@ export class GatewayRoutes {
     }
 
     private static getProdRoutes(): Array<any> {
-        return [
+        const routes: Array<any> = [
             {
                 path: [ '/v2/ping' ],
                 target : process.env.FSP_CONTROLLER,
@@ -121,10 +122,27 @@ export class GatewayRoutes {
                 pathRewrite: {
                     '^/v2/multitenant': ''
                 }
-            },
+            }
         ];
+
+        // Controller names and urls are comma separated env vars to allow adding custom controller routes without needing code changes
+        if (process.env.CONTROLLER_NAMES && process.env.CONTROLLER_URLS) {
+            const controllerNames = process.env.CONTROLLER_NAMES.split(',');
+            const controllerUrls = process.env.CONTROLLER_URLS.split(',');
+            if (controllerNames.length < 1 || controllerUrls.length < 1 || controllerNames.length !== controllerUrls.length) {
+                Logger.warn(`Invalid values set for controller names and urls: ${process.env.CONTROLLER_NAMES} ${process.env.CONTROLLER_URLS}`);
+            } else {
+                for (let i=0; i++; i<controllerNames.length) {
+                    routes.push({
+                        path: [ `/v2/${controllerNames[i]}/api` ],
+                        target : controllerUrls[i],
+                        pathRewrite: {
+                            [`^/v2/${controllerNames[i]}/api`]: '/v2/api',
+                        },
+                    });
+                }
+            }
+        }
+        return routes;
     }
-
-
 }
-
