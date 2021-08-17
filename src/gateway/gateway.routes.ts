@@ -143,6 +143,7 @@ export class GatewayRoutes {
                 }
             }
         }
+        Logger.log('routes', routes);
         return routes;
     }
 }
