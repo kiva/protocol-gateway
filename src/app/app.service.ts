@@ -10,7 +10,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json';
 
 /**
- * The Root Application Service
+ * Sets up the gateway to handle external traffic, eg cors, rate-limiting, etc
  */
 @Injectable()
 export class AppService {
