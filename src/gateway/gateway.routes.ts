@@ -132,7 +132,7 @@ export class GatewayRoutes {
             if (controllerNames.length < 1 || controllerUrls.length < 1 || controllerNames.length !== controllerUrls.length) {
                 Logger.warn(`Invalid values set for controller names and urls: ${process.env.CONTROLLER_NAMES} ${process.env.CONTROLLER_URLS}`);
             } else {
-                for (let i=0; i++; i<controllerNames.length) {
+                for (let i=0; i<controllerNames.length; i++) {
                     routes.push({
                         path: [ `/v2/${controllerNames[i]}/api` ],
                         target : controllerUrls[i],
@@ -143,7 +143,6 @@ export class GatewayRoutes {
                 }
             }
         }
-        Logger.log('routes', routes);
         return routes;
     }
 }
