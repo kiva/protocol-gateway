@@ -51,7 +51,6 @@ spec:
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
         securityContext:
-          runAsNonRoot: true
           readOnlyRootFilesystem: true
       imagePullSecrets:
         {{- with .Values.image.imagePullSecrets }}
