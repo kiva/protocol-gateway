@@ -68,7 +68,7 @@ jobs:
             nvm alias default v14.15.1
       - run:
           name: Get ACAPy
-          command: docker pull bcgovimages/aries-cloudagent:py36-1.15-1_0.6.0
+          command: docker pull bcgovimages/aries-cloudagent:py36-1.16-1_0.7.1
       - run:
           name: Override for gateway image
           command: ./scripts/setup_override.sh -r protocol-gateway
@@ -103,7 +103,13 @@ jobs:
     parameters:
       tag:
         default: latest
-        description: Tag of protocol-gateway to push to dev
+        description: Tag of target services to push to dev
+        type: string
+      service:
+        description: Name of service to push to dev
+        type: string
+      helm-charts:
+        description: Location of the helm charts to be used in this deployment
         type: string
     steps:
       - checkout
@@ -114,8 +120,8 @@ jobs:
       - helm/install-helm-client:
           version: v3.2.4
       - run:
-          name: Deploy to dev cloud
-          command: helm upgrade --install protocol-gateway helm-config --set image.tag=<<parameters.tag>> --set ingress.host=gateway.protocol-dev.kiva.org
+          name: Deploy service to dev cloud
+          command: helm upgrade --install <<parameters.service>> <<parameters.helm-charts>> --set image.tag=<<parameters.tag>> --set ingress.host=gateway.protocol-dev.kiva.org
 
 workflows:
   build-test-deploy:
@@ -164,6 +170,8 @@ workflows:
             branches:
               ignore: /.*/
           tag: << pipeline.git.tag >>
+          service: protocol-gateway
+          helm-charts: helm-config
 
 orbs:
   node: circleci/node@4.1.0
