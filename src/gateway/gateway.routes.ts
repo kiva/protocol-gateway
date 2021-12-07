@@ -96,6 +96,13 @@ export class GatewayRoutes {
                     '^/v2/credential': '/credential',
                 },
             },
+            {
+                path: [ '/v2/reporting/graphql' ],
+                target : process.env.PROTOCOL_REPORTING,
+                pathRewrite: {
+                    '^/v2/reporting/graphql': '/graphql',
+                },
+            },
         ];
     }
 
