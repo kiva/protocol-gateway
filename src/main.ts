@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { AppService } from './app/app.service';
 import { Logger } from 'protocol-common/logger';
+import { INestApplication } from '@nestjs/common';
 
 const bootstrap = async () => {
     const port = process.env.PORT;
@@ -10,8 +11,9 @@ const bootstrap = async () => {
     const app = await NestFactory.create(AppModule, {
         bodyParser: false,
     });
+    const setup: (app: INestApplication) => Promise<void> = AppService.setup;
 
-    await AppService.setup(app);
+    await setup(app);
     await app.listen(port);
     Logger.info(`Server started on ${port}`);
 };
