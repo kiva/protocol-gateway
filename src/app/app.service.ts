@@ -7,6 +7,7 @@ import { traceware } from 'protocol-common/tracer';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json';
+import requestIdGenerator from 'express-request-id';
 
 /**
  * Sets up the gateway to handle external traffic, eg cors, rate-limiting, etc
@@ -17,12 +18,10 @@ export class AppService {
     /**
      * Sets up app in a way that can be used by main.ts and e2e tests
      */
-    // eslint-disable-next-line @typescript-eslint/require-await
-    public static async setup(app: INestApplication) {
+    public static setup(app: INestApplication) {
 
         // Setting request-id middleware which assigns a unique requestid per incomming requests if not sent by client.
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const requestId = require('express-request-id')();
+        const requestId = requestIdGenerator();
         app.use(requestId);
 
         const logger = new Logger(DatadogLogger.getLogger());
