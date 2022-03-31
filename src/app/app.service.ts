@@ -1,7 +1,6 @@
 import { Injectable, INestApplication } from '@nestjs/common';
 import { ProtocolExceptionFilter } from 'protocol-common/protocol.exception.filter';
 import { Logger } from 'protocol-common/logger';
-import { LoggingInterceptor } from 'protocol-common/logging.interceptor';
 import { DatadogLogger } from 'protocol-common/datadog.logger';
 import helmet from 'helmet';
 import { traceware } from 'protocol-common/tracer';
@@ -18,9 +17,11 @@ export class AppService {
     /**
      * Sets up app in a way that can be used by main.ts and e2e tests
      */
+    // eslint-disable-next-line @typescript-eslint/require-await
     public static async setup(app: INestApplication) {
 
         // Setting request-id middleware which assigns a unique requestid per incomming requests if not sent by client.
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const requestId = require('express-request-id')();
         app.use(requestId);
 
