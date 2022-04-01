@@ -62,7 +62,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
                         Logger.error(response.data);
                         next(new UnauthorizedException(AuthenticationMiddleware.INVALID_AUTH0_CLIENT_HEADER_MESSAGE));
                     } else {
-                        req.headers[HttpConstants.AUTH0_AUTH_HEADER] = 'Bearer ' + response.data.access_token;
+                        req.headers[HttpConstants.AUTH0_AUTH_HEADER] = `Bearer ${response.data.access_token as string}`;
                     }
                 } catch (e) {
                     Logger.error(e);
