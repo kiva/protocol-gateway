@@ -7,12 +7,15 @@ import { traceware } from 'protocol-common/tracer';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../docs/swagger.json';
+import { ServiceReportDto } from './dtos/service.report.dto';
 
 /**
  * Sets up the gateway to handle external traffic, eg cors, rate-limiting, etc
  */
 @Injectable()
 export class AppService {
+
+    private static startedAt: Date;
 
     /**
      * Sets up app in a way that can be used by main.ts and e2e tests
@@ -38,6 +41,8 @@ export class AppService {
 
         app.use(traceware('gateway'));
 
+        AppService.startedAt = new Date();
+
         // Default is 100 requests per minute
         app.use(rateLimit({
             windowMs: process.env.RATE_LIMIT_WINDOW_MS,
@@ -47,4 +52,15 @@ export class AppService {
         // Load swagger docs and display
         app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     };
+
+    public async generateStatsReport(): Promise<ServiceReportDto> {
+        Logger.info('stats report generated');
+        const report: ServiceReportDto = new ServiceReportDto();
+        report.serviceName = process.env.SERVICE_NAME;
+        report.startedAt = AppService.startedAt.toDateString();
+        report.currentTime = new Date().toDateString();
+        report.versions = ['none'];
+
+        return Promise.resolve(report);
+    }
 }
