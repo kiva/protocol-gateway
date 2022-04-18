@@ -53,7 +53,7 @@ export class AppService {
         app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     };
 
-    public async generateStatsReport(): Promise<ServiceReportDto> {
+    public generateStatsReport(): ServiceReportDto {
         Logger.info('stats report generated');
         const report: ServiceReportDto = new ServiceReportDto();
         report.serviceName = process.env.SERVICE_NAME;
@@ -61,6 +61,6 @@ export class AppService {
         report.currentTime = new Date().toDateString();
         report.versions = ['none'];
 
-        return Promise.resolve(report);
+        return report;
     }
 }
