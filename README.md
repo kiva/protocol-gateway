@@ -6,7 +6,7 @@ aka: NestJS Gateway, Gateway Service
 
 We can run the gateway in isolation with the docker compose in this directory
 or as part of the complete backend stack. See master
-[README](https://github.com/kiva/protocol/blob/master/README.md) for details.
+[README](https://github.com/kiva/protocol-integration-tests/blob/main/README.md) for details.
 
 ## Dependencies
 
@@ -42,12 +42,6 @@ is running in and then uses that information to pull config from
 In deployed environments the service uses the kubernetes secrets file to set
 the environment which then determines which section of the config json the
 service reads (from the `src/config/env.json` in this directory).
-
-## Ownership
-
-Development: @jsaur
-
-Operations: @jsaur
 
 ## Features / Aspects
 
