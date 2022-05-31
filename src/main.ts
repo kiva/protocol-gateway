@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
-import { AppService } from './app/app.service';
-import { Logger } from 'protocol-common/logger';
 import { INestApplication } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app/app.module.js';
+import { AppService } from './app/app.service.js';
 
 const bootstrap = async () => {
     const port = process.env.PORT;
@@ -15,7 +15,7 @@ const bootstrap = async () => {
 
     await setup(app);
     await app.listen(port);
-    Logger.info(`Server started on ${port}`);
+    Logger.log(`Server started on ${port}`);
 };
 
 bootstrap().catch(e => {

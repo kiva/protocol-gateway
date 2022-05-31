@@ -1,5 +1,5 @@
-import { Constants } from 'protocol-common/constants';
-import { Logger } from 'protocol-common/logger';
+import { Logger } from '@nestjs/common';
+import { Constants } from 'protocol-common';
 
 /**
  * Defines all routes.
