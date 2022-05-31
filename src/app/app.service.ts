@@ -24,8 +24,7 @@ export class AppService {
         const {default: requestIdGenerator} = await import('express-request-id');
         app.use(requestIdGenerator());
 
-        const logger = new Logger(app.get(ProtocolLogger));
-        app.useLogger(logger);
+        app.useLogger(app.get(ProtocolLogger));
 
         app.use(helmet());
 
