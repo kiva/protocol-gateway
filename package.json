@@ -42,7 +42,7 @@
     "typescript": "^4.2.3"
   },
   "devDependencies": {
-    "@nestjs/testing": "^7.6.14",
+    "@nestjs/testing": "^8.4.6",
     "@types/express-request-id": "^1.4.3",
     "@types/jest": "^26.0.20",
     "@types/supertest": "^2.0.10",
