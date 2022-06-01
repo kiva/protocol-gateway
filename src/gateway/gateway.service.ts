@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from 'protocol-common/logger';
-import { DatadogLogger } from 'protocol-common/datadog.logger';
-import { GatewayRoutes } from './gateway.routes';
+import { ProtocolLogger } from 'protocol-common';
+import { GatewayRoutes } from './gateway.routes.js';
 
 @Injectable()
 export class GatewayService {
 
-    private readonly logger: Logger;
-    constructor() {
-        this.logger = DatadogLogger.getLogger();
+    constructor(readonly logger: ProtocolLogger) {
     }
-
     /**
      * Nestjs treats the middleware http proxy requests different than regular request so doesn't trigger the interceptors and filters we're used to
      * Need to apply logger to http-proxy itself

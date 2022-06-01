@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { HttpConstants } from 'protocol-common/http-context/http.constants';
+import { HttpConstants } from 'protocol-common';
 
 /**
  * author: esmaeila

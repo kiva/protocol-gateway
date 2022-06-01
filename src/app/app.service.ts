@@ -1,13 +1,11 @@
-import { Injectable, INestApplication } from '@nestjs/common';
-import { ProtocolExceptionFilter } from 'protocol-common/protocol.exception.filter';
-import { Logger } from 'protocol-common/logger';
-import { DatadogLogger } from 'protocol-common/datadog.logger';
+import { Injectable, INestApplication, Logger } from '@nestjs/common';
 import helmet from 'helmet';
-import { traceware } from 'protocol-common/tracer';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../docs/swagger.json';
-import { ServiceReportDto } from './dtos/service.report.dto';
+import { ProtocolExceptionFilter, ProtocolLogger, traceware } from 'protocol-common';
+import { ServiceReportDto } from './dtos/service.report.dto.js';
+// @ts-ignore: assertions are currently required when importing json
+import swaggerDocument from '../docs/swagger.json' assert { type: 'json'};
 
 /**
  * Sets up the gateway to handle external traffic, eg cors, rate-limiting, etc
@@ -26,8 +24,7 @@ export class AppService {
         const {default: requestIdGenerator} = await import('express-request-id');
         app.use(requestIdGenerator());
 
-        const logger = new Logger(DatadogLogger.getLogger());
-        app.useLogger(logger);
+        app.useLogger(app.get(ProtocolLogger));
 
         app.use(helmet());
 
@@ -54,7 +51,7 @@ export class AppService {
     };
 
     public generateStatsReport(): ServiceReportDto {
-        Logger.info('stats report generated');
+        Logger.log('stats report generated');
         const report: ServiceReportDto = new ServiceReportDto();
         report.serviceName = process.env.SERVICE_NAME;
         report.startedAt = AppService.startedAt.toDateString();

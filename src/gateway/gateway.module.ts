@@ -1,14 +1,13 @@
-import { MiddlewareConsumer, Module, NestModule, HttpModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, HttpModule, Logger } from '@nestjs/common';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { RequestContextMiddleware } from 'protocol-common/http-context/request.context.middleware';
-import { GatewayService } from './gateway.service';
-import { RequestIdMiddleware } from './request.id.middleware';
-import { AuthenticationMiddleware } from './authentication.middleware';
-import { SpanPropagationMiddleware } from './span.propagation.middleware';
-import { Logger } from 'protocol-common/logger';
+import { RequestContextMiddleware, ProtocolLoggerModule } from 'protocol-common';
+import { GatewayService } from './gateway.service.js';
+import { RequestIdMiddleware } from './request.id.middleware.js';
+import { AuthenticationMiddleware } from './authentication.middleware.js';
+import { SpanPropagationMiddleware } from './span.propagation.middleware.js';
 
 @Module({
-    imports: [HttpModule],
+    imports: [HttpModule, ProtocolLoggerModule],
     controllers: [],
     providers: [ GatewayService ],
 })

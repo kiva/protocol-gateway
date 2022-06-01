@@ -1,8 +1,7 @@
 import { Get, Controller } from '@nestjs/common';
-import { HttpConstants } from 'protocol-common/http-context/http.constants';
-import { DisableAutoLogging } from 'protocol-common/disable.auto.logging.decorator';
-import { AppService } from './app.service';
-import { ServiceReportDto } from './dtos/service.report.dto';
+import { HttpConstants, DisableAutoLogging } from 'protocol-common';
+import { AppService } from './app.service.js';
+import { ServiceReportDto } from './dtos/service.report.dto.js';
 
 /**
  * Base route is just for various health check endpoints

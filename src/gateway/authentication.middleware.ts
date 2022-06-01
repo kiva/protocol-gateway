@@ -1,11 +1,10 @@
-import { Injectable, NestMiddleware, HttpStatus, HttpService, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NestMiddleware, HttpStatus, UnauthorizedException, Logger } from '@nestjs/common';
 import jwt from 'express-jwt';
 import { expressJwtSecret } from 'jwks-rsa';
-import { ProtocolHttpService } from 'protocol-common/protocol.http.service';
 import { AxiosRequestConfig } from 'axios';
-import { Logger } from 'protocol-common/logger';
-import { GatewayCommon } from './gateway.common';
-import { HttpConstants } from '../common/http-context/http.constants';
+import { ProtocolHttpService } from 'protocol-common';
+import { GatewayCommon } from './gateway.common.js';
+import { HttpConstants } from '../common/http-context/http.constants.js';
 
 
 /**
@@ -20,13 +19,10 @@ import { HttpConstants } from '../common/http-context/http.constants';
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
 
-    private readonly http: ProtocolHttpService;
-
     /**
      * Wraps the injected HttpService in a ProtocolHttpService
      */
-    constructor(httpService: HttpService) {
-        this.http = new ProtocolHttpService(httpService);
+    constructor(readonly http: ProtocolHttpService) {
     }
 
     async use(req, res, next) {
