@@ -29,7 +29,7 @@
     "axios": "^0.26.0",
     "class-validator": "^0.13.1",
     "crypto-js": "^4.1.1",
-    "express-jwt": "^6.0.0",
+    "express-jwt": "^8.2.0",
     "express-rate-limit": "^5.2.6",
     "express-request-id": "^1.4.1",
     "helmet": "^5.1.0",
